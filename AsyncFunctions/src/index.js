@@ -23,22 +23,36 @@ async function fire(x, y, z) {
     return [x, y, z]
 }
 
+function loadAmmo(){
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('Munição carregada')
+        }, 2000)
+    }	
+    )
+}
+
+
 async function moveAndFire(x, y, z) {
     try{ //Caso retorne uma Promise rejeitada, o catch captura o erro
+     const adjustPositionPromise = adjustPosition(x, y, z);
+     const loadAmmoPromise = loadAmmo();
 
-    //O await faz com que a função espere a Promise ser resolvida ou rejeitada
+     //O await faz com que a função espere a Promise ser resolvida ou rejeitada
+     //O código só continua após as duas Promises serem resolvidas
+    let resultadoPromises = await Promise.all([adjustPositionPromise, loadAmmoPromise]);  
 
-    //O novasCoordenadas recebe o valor retornado pela Promise resolvida (.then) 
-    let novasCoordenadas = await adjustPosition(x, y, z) 
+    let novasCoordenadas = resultadoPromises[0] //O resultadoPromises[0] recebe o valor retornado pela Promise resolvida (.then)
     console.log(`Arma ajustada para as coordenadas (${novasCoordenadas[0]}, ${novasCoordenadas[1]}, ${novasCoordenadas[2]})`)
 
     //O coordenadasFogo recebe o valor retornado pela Promise resolvida (.then)
     let coordenadasFogo = await fire(...novasCoordenadas)
     console.log(`Começando a atirar nas coordenadas (${coordenadasFogo[0]}, ${coordenadasFogo[1]}, ${coordenadasFogo[2]})`)
 
+    console.log(resultadoPromises[1]);
  } catch (erro) {
     console.log(erro)
  }
 } 
   
-moveAndFire(20, 37, 100)
+moveAndFire(20, 35, 100)
