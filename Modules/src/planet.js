@@ -5,9 +5,9 @@ class Planet{
     }
 
     rotate(){
-        console.log("Rotacionando....");
+        alert("Rotacionando....");
     }
 }
 
 module.exports = Planet; //commonJS
-export default Planet; //ES6
+/*export default Planet; //ES6 */

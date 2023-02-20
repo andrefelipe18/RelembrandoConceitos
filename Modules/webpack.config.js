@@ -8,7 +8,7 @@ module.exports = {
         filename: '[name].bundle.js', //Nome do arquivo de saída
         path: path.resolve(__dirname, 'public'), //Caminho do arquivo de saída
     },
-    mode: 'development', //Modo de desenvolvimento
+    mode: 'none', //Modo de desenvolvimento
     module: {
         rules: [
             {
